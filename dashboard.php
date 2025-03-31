@@ -9,15 +9,16 @@ if (!isset($_SESSION['user_id'])) {
 $role = $_SESSION['role'];
 
 echo "<h1>Bienvenue, " . htmlspecialchars($_SESSION['username']) . " !</h1>";
-
 if ($role === 'Admin') {
     echo "<a href='admin_page.php'>Gérer les utilisateurs</a>";
+    echo "<a href='ajouter_salarie.php' class='btn'>Ajouter un Médecin</a>";
 } elseif ($role === 'Infirmier') {
     echo "<a href='edit_content.php'>Modifier le contenu</a>";
 } elseif ($role === 'Medecin') {
     echo "<a href='view_content.php'>Voir le contenu</a>";
 } elseif ($role === 'Secretaire') {
     echo "<a>Vous etes bien connecté en tant que $role</a>";
+    echo "<a href='pre.php'>preadmission</a>";
 } elseif ($role === 'Unknown') {
     echo "<a>Vous n'avez pas de rôle attribué. Contactez l'administrateur.</a>";
 } else {
@@ -34,7 +35,10 @@ if ($role === 'Admin') {
     <script src="scripts.js" defer></script>
 </head>
 <body>
-
+<!-- Bouton de déconnexion -->
+<form action="deconnexion.php" method="POST">
+    <button type="submit" class="btn btn-danger">Se déconnecter</button>
+</form>
 <div id="dashboard-container" class="dashboard-container">
 
 </div>

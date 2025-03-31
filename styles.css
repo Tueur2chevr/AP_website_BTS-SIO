@@ -1,3 +1,4 @@
+/* Réinitialisation des styles */
 * {
     margin: 0;
     padding: 0;
@@ -5,55 +6,64 @@
     font-family: Arial, sans-serif;
 }
 
+/* Corps de la page */
 body {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('LPFS_logo.png') no-repeat center center fixed;
-    background-size: cover;
+    background: #f4f4f4; /* Fond uni gris clair */
 }
 
-.login-container {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 20px;
+/* Conteneur du formulaire */
+.form-container {
+    background: white; /* Fond blanc pour bien démarquer le formulaire */
+    padding: 30px;
     border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
-    max-width: 400px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 450px;
     width: 100%;
-}
-
-.login-form h2 {
     text-align: center;
-    margin-bottom: 20px;
+}
+
+/* Titre */
+h1 {
+    text-align: center;
     color: #333;
+    margin-bottom: 20px;
 }
 
-.input-group {
-    margin-bottom: 15px;
+/* Champs de formulaire */
+form {
+    display: flex;
+    flex-direction: column;
 }
 
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
+label {
+    text-align: left;
     font-size: 14px;
     color: #333;
+    margin-top: 10px;
+    font-weight: bold;
 }
 
-.input-group input {
+input, select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
+    margin-top: 5px;
 }
 
-.input-group input:focus {
+/* Effet au focus */
+input:focus, select:focus {
     border-color: #007BFF;
     outline: none;
 }
 
-button[type="submit"] {
+/* Bouton de soumission */
+button {
     width: 100%;
     padding: 10px;
     background-color: #007BFF;
@@ -63,69 +73,50 @@ button[type="submit"] {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 20px;
 }
 
-button[type="submit"]:hover {
+button:hover {
     background-color: #0056b3;
 }
 
-@media (max-width: 500px) {
-    .login-container {
-        padding: 15px;
-    }
-
-    .login-form h2 {
-        font-size: 20px;
-    }
-}
-
-/* styles.css */
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-.dashboard-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 20px;
-}
-
-.module {
-    width: 48%; /* Par défaut, 2 modules par ligne */
-    height: 200px;
-    background-color: #f0f0f0;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.module a {
-    color: white;
-    font-size: 18px;
+/* Message de succès ou d'erreur */
+p {
+    padding: 10px;
+    border-radius: 5px;
     font-weight: bold;
+}
+
+p.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+p.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Lien retour */
+a {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #007BFF;
     text-decoration: none;
+    font-weight: bold;
 }
 
-@media (max-width: 768px) {
-    .module {
-        width: 100%; /* Un module par ligne sur petits écrans */
-    }
+a:hover {
+    text-decoration: underline;
 }
 
-@media (min-width: 1024px) {
-    .module {
-        width: 48%; /* Deux modules par ligne sur grands écrans */
+/* Responsive */
+@media (max-width: 500px) {
+    .form-container {
+        padding: 20px;
+        max-width: 100%;
     }
 }
