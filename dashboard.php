@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $role = $_SESSION['role'];
 
-echo "<h1>Bienvenue, " . htmlspecialchars($_SESSION['username']) . " !</h1>";
+echo "<h1 id=titre_dashboard>Bienvenue, " . htmlspecialchars($_SESSION['username']) . " !</h1>";
 if ($role === 'Admin') {
     echo "<a href='admin_page.php'>Gérer les utilisateurs</a>";
     echo "<a href='ajouter_salarie.php' class='btn'>Ajouter un Médecin</a>";
@@ -39,8 +39,10 @@ if ($role === 'Admin') {
 <form action="deconnexion.php" method="POST">
     <button type="submit" class="btn btn-danger">Se déconnecter</button>
 </form>
-<div id="dashboard-container" class="dashboard-container">
-
+<div id="dashboard">
+    <div class="module-container" id="modules-container">
+        <!-- Les boutons seront insérés ici dynamiquement -->
+    </div>
 </div>
 
 </body>

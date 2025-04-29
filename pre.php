@@ -30,36 +30,56 @@ if (!isset($_SESSION['user_id'])) {
             <!-- Div qui va contenir les données du patient (visible après recherche) -->
             <div id="donnees-patient">
                 <h2>Informations du Patient</h2>
+                <div class="civilite-container">
+                    <label>Civilité :</label>
+                    <div class="civilite-buttons">
+                        <button type="button" class="civilite-button active" data-value="M">Monsieur</button>
+                        <button type="button" class="civilite-button" data-value="F">Madame</button>
+                    </div>
+                    <input type="hidden" id="civilite" name="civilite" value="M">
+                </div>
                 <div>
-                    <label for="nom">Nom :</label>
-                    <input type="text" id="nom" name="nom" >
+                    <label for="nom_naissance">Nom de naissance :</label>
+                    <input type="text" id="nom_naissance" name="nom_naissance" required>
+                </div>
+                <div>
+                    <label for="nom_epoux">Nom d'époux :</label>
+                    <input type="text" id="nom_epoux" name="nom_epoux" required>
                 </div>
                 <div>
                     <label for="prenom">Prénom :</label>
-                    <input type="text" id="prenom" name="prenom" >
+                    <input type="text" id="prenom" name="prenom" required>
+                </div>
+                <div>
+                    <label for="date_naissance">Date de naissance :</label>
+                    <input type="date" id="date_naissance" name="date_naissance" required onchange="checkMinor()">
                 </div>
                 <div>
                     <label for="email">Email :</label>
-                    <input type="email" id="email" name="mail" >
+                    <input type="email" id="email" name="mail" required>
                 </div>
                 <div>
                     <label for="adresse">Adresse :</label>
-                    <input type="text" id="adresse" name="adresse_postal" >
+                    <input type="text" id="adresse" name="adresse_postal" required>
+                </div>
+                <div>
+                    <label for="ville">Ville :</label>
+                    <input type="text" id="ville" name="ville" required>
+                </div>
+                <div>
+                    <label for="code_postal">Code postal :</label>
+                    <input type="text" id="code_postal" name="code_postal" required>
                 </div>
                 <div>
                     <label for="telephone">Téléphone :</label>
-                    <input type="text" id="telephone" name="telephone" >
+                    <input type="tel" id="telephone" name="telephone" pattern=""[0-9]*" maxlength="10" required>
                 </div>
 
                 <!-- Pré-admission -->
                 <h2>Informations de Pré-Admission</h2>
                 <div>
                     <label for="organisme_securite_sociale">Organisme de sécurité sociale :</label>
-                    <input type="text" id="organisme_securite_sociale" name="organisme_securite_sociale">
-                </div>
-                <div>
-                    <label for="caisse_assurance_maladie">Nom de la caisse d'assurance maladie :</label>
-                    <input type="text" id="caisse_assurance_maladie" name="caisse_assurance_maladie">
+                    <input type="text" id="organisme_securite_sociale" name="organisme_securite_sociale" required>
                 </div>
                 <div>
                     <label for="est_assure">Le patient est-il l'assuré ?</label>
@@ -71,10 +91,10 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
                 <div>
                     <label for="mutuelle_assurance">Nom de la mutuelle ou de l'assurance :</label>
-                    <input type="text" id="mutuelle_assurance" name="mutuelle_assurance">
+                    <input type="text" id="mutuelle_assurance" name="mutuelle_assurance" required>
                 </div>
                 <div>
-                    <label for="numero_adhesion">Numéro d'adhérent :</label>
+                    <label for="numero_adhesion">Numéro d'adhérent (mutuelle) :</label>
                     <input type="text" id="numero_adhesion" name="numero_adhesion">
                 </div>
                 <div>
@@ -115,10 +135,6 @@ if (!isset($_SESSION['user_id'])) {
                     <label for="personne_prevenir_telephone">Téléphone :</label>
                     <input type="text" id="personne_prevenir_telephone" name="personne_prevenir_telephone">
                 </div>
-                <div>
-                    <label for="personne_prevenir_adresse">Adresse :</label>
-                    <input type="text" id="personne_prevenir_adresse" name="personne_prevenir_adresse">
-                </div>
             </div>
 
             <!-- Personne de confiance -->
@@ -135,10 +151,6 @@ if (!isset($_SESSION['user_id'])) {
                 <div>
                     <label for="personne_confiance_telephone">Téléphone :</label>
                     <input type="text" id="personne_confiance_telephone" name="personne_confiance_telephone">
-                </div>
-                <div>
-                    <label for="personne_confiance_adresse">Adresse :</label>
-                    <input type="text" id="personne_confiance_adresse" name="personne_confiance_adresse">
                 </div>
             </div>
             <!-- Téléchargement des documents -->
@@ -160,7 +172,7 @@ if (!isset($_SESSION['user_id'])) {
                 <label for="carte_mutuelle">Carte de mutuelle :</label>
                 <input type="file" id="carte_mutuelle" name="carte_mutuelle" accept="image/*,.pdf">
             </div>
-            <div>
+            <div id="livret-famille-container">
                 <label for="livret_famille">Livret de famille (enfants mineurs) :</label>
                 <input type="file" id="livret_famille" name="livret_famille" accept="image/*,.pdf">
             </div>

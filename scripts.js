@@ -24,21 +24,26 @@ document.addEventListener('DOMContentLoaded', () => {
         dashboardContainer.appendChild(moduleElement);
     });
 
+    
     // Fonction pour récupérer les modules selon le rôle
     function getModulesForRole(role) {
         const modules = [];
-
+        let roleClass = 'default';
+    
         if (role === "Admin") {
+            roleClass = 'admin';
             modules.push(
                 { title: "Gestion des utilisateurs", link: "/admin/users", image: "/images/admin1.jpg" },
                 { title: "Paramètres système", link: "/admin/settings", image: "/images/admin2.jpg" }
             );
         } else if (role === "Infirmier") {
+            roleClass = 'nurse';
             modules.push(
                 { title: "Suivi des patients", link: "/nurse/patients", image: "/images/nurse1.jpg" },
                 { title: "Gestion des médicaments", link: "/nurse/medications", image: "/images/nurse2.jpg" }
             );
         } else if (role === "Medecin") {
+            roleClass = 'doctor';
             modules.push(
                 { title: "Consultations", link: "/doctor/appointments", image: "/images/doctor1.jpg" },
                 { title: "Historique des patients", link: "/doctor/history", image: "/images/doctor2.jpg" }
@@ -48,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 { title: "Page d'accueil", link: "/home", image: "/images/unknown1.jpg" }
             );
         }
-
-        return modules;
+    
+        return { modules, roleClass };
     }
 
     function getUserRoleFromSession() {
@@ -75,7 +80,7 @@ function chercherPatient() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            document.getElementById("nom").value = data.nom_naissance || "";
+            document.getElementById("nom_naissance").value = data.nom_naissance || "";
             document.getElementById("prenom").value = data.prenom || "";
             document.getElementById("email").value = data.mail || "";
             document.getElementById("adresse").value = data.adresse_postal || "";
@@ -113,9 +118,21 @@ function chercherPatient() {
 
 
 document.getElementById("resetButton").addEventListener("click", function() {
-    // Réinitialiser complètement le formulaire
+    // Réinitialiser tous les champs du formulaire
     document.getElementById("preinscription-form").reset();
-    document.getElementById("donnees-patient").style.display = "none";
+    
+    // Réinitialiser manuellement les cases à cocher car elles ne sont pas toujours bien reset
+    document.getElementById("est_assure").checked = false;
+    document.getElementById("est_ald").checked = false;
+    document.getElementById("chambre_particuliere").checked = false;
+    // Réinitialiser le champ de recherche médecin
+    document.getElementById("liste_medecins").innerHTML = '';
+    
+    // Optionnel: Réinitialiser les champs de fichier (ils ne sont pas reset par .reset())
+    const fileInputs = document.querySelectorAll('input[type="file"]');
+    fileInputs.forEach(input => {
+        input.value = '';
+    });
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -147,3 +164,70 @@ function rechercherMedecin() {
         .catch(error => console.error("Erreur lors de la recherche :", error));
     }
 }
+
+// Regarde si le patient est mineur et affiche le livret de famille si c'est le cas
+function checkMinor() {
+    const dateNaissance = document.getElementById('date_naissance').value;
+    const livretFamilleContainer = document.getElementById('livret-famille-container');
+    const livretFamilleInput = document.getElementById('livret_famille');
+    
+    if (!dateNaissance) {
+        livretFamilleContainer.style.display = 'none';
+        livretFamilleInput.removeAttribute('required');
+        return;
+    }
+
+    const naissance = new Date(dateNaissance);
+    const aujourdHui = new Date();
+    
+    // Calcul précis de l'âge
+    let age = aujourdHui.getFullYear() - naissance.getFullYear();
+    const mois = aujourdHui.getMonth() - naissance.getMonth();
+    
+    if (mois < 0 || (mois === 0 && aujourdHui.getDate() < naissance.getDate())) {
+        age--;
+    }
+
+    if (age < 18) {
+        livretFamilleContainer.style.display = 'block';
+        livretFamilleInput.setAttribute('required', 'required');
+    } else {
+        livretFamilleContainer.style.display = 'none';
+        livretFamilleInput.removeAttribute('required');
+        livretFamilleInput.value = ''; // Effacer la valeur si existante
+    }
+}
+
+// Initialisation au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    // Ajoutez l'écouteur d'événement pour la date de naissance
+    document.getElementById('date_naissance').addEventListener('change', checkMinor);
+    
+    // Vérification initiale si la date est déjà remplie
+    if (document.getElementById('date_naissance').value) {
+        checkMinor();
+    }
+    
+    // Autres initialisations si nécessaire
+    const buttons = document.querySelectorAll('.civilite-button');
+    const hiddenInput = document.getElementById('civilite');
+    
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Retire la classe active de tous les boutons
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Ajoute la classe active au bouton cliqué
+            this.classList.add('active');
+            
+            // Met à jour la valeur cachée
+            hiddenInput.value = this.dataset.value;
+            
+            // Animation de feedback
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 100);
+        });
+    });
+});

@@ -8,42 +8,97 @@
 
 /* Corps de la page */
 body {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    background: #f4f4f4; /* Fond uni gris clair */
+    background-image: url("LPFS_logo.png");
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
 }
 
-/* Conteneur du formulaire */
-.form-container {
-    background: white; /* Fond blanc pour bien démarquer le formulaire */
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-    max-width: 450px;
+/* En-tête */
+.header {
     width: 100%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
+    margin-bottom: 2px;
 }
 
-/* Titre */
-h1 {
-    text-align: center;
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 5px;
+}
+
+.welcome-message {
+    font-size: 16px;
     color: #333;
-    margin-bottom: 20px;
 }
 
-/* Champs de formulaire */
+/* Contenu principal */
+.main-content {
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+/* Conteneur civilité */
+.civilite-container {
+    margin: 15px 0;
+}
+
+.civilite-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+/* Boutons civilité */
+.civilite-button {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #d1d5db;
+    background-color: #ffffff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    text-align: center;
+}
+
+.civilite-button:hover {
+    border-color: #007BFF;
+    background-color: #f8fafc;
+}
+
+.civilite-button.active {
+    background-color: #007BFF;
+    color: white;
+    border-color: #007BFF;
+}
+
+/* Styles de formulaire */
 form {
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
 label {
-    text-align: left;
     font-size: 14px;
     color: #333;
-    margin-top: 10px;
     font-weight: bold;
 }
 
@@ -53,19 +108,17 @@ input, select {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
-    margin-top: 5px;
 }
 
-/* Effet au focus */
 input:focus, select:focus {
     border-color: #007BFF;
     outline: none;
 }
 
-/* Bouton de soumission */
-button {
+button[type="submit"], 
+button[type="button"]:not(.civilite-button) {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     background-color: #007BFF;
     border: none;
     border-radius: 5px;
@@ -73,50 +126,97 @@ button {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
-button:hover {
+button[type="submit"]:hover, 
+button[type="button"]:not(.civilite-button):hover {
     background-color: #0056b3;
 }
 
-/* Message de succès ou d'erreur */
-p {
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-p.success {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-p.error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
-
-/* Lien retour */
-a {
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-    color: #007BFF;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
 /* Responsive */
-@media (max-width: 500px) {
-    .form-container {
-        padding: 20px;
-        max-width: 100%;
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
     }
+    
+    .header, .main-content {
+        border-radius: 5px;
+    }
+    
+    .civilite-buttons {
+        flex-direction: column;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .dashboard-content {
+        margin-top: 120px;
+        padding: 10px;
+    }
+    
+    .pre-admission-btn {
+        width: 100%;
+    }
+}
+
+.dashboard-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    padding: 15px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.welcome-user {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Contenu centré */
+.dashboard-content {
+    margin-top: 80px; /* Pour éviter que le contenu soit caché sous le header */
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Style pour le bouton "Préadmission" */
+.pre-admission-btn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin: 20px 0;
+    text-decoration: none;
+    text-align: center;
+}
+
+.pre-admission-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
